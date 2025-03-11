@@ -1,0 +1,69 @@
+{
+    "settings": {
+      "numHeadlands": 3,
+      "biggestHeadlandPathBuffering": 12,
+      "minPathTurnRadius": 6.930361398854649,
+      "projection": {
+        "type": "TOPCON",
+        "zone": 55,
+        "hemisphere": "SOUTH"
+      }
+    },
+    "operatingArea": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            149.57002674117868,
+            -34.95950170436757
+          ],
+          [
+            149.5700850412375,
+            -34.960628207245946
+          ],
+          [
+            149.5684740523892,
+            -34.96061657032776
+          ],
+          [
+            149.56848573903895,
+            -34.95981139133982
+          ],
+          [
+            149.56802139479188,
+            -34.95982947477243
+          ],
+          [
+            149.56811010357575,
+            -34.9594978373126
+          ],
+          [
+            149.5684719420362,
+            -34.959490830887354
+          ],
+          [
+            149.56894116481402,
+            -34.95933435405768
+          ],
+          [
+            149.57002674117868,
+            -34.95950170436757
+          ]
+        ]
+      ]
+    },
+    "obstacles": [],
+    "metadata": {
+      "channelID": "8c470386-c921-4489-9588-94c4d9344abc",
+      "channelDisplay": "SwarmFarm - Automated Testing Data - Free Routing",
+      "datasetID": "5f103950-f8d9-48ea-8617-7feb64a1a8b3",
+      "fieldID": "",
+      "workItemID": "",
+      "fieldDisplay": "",
+      "workItemDisplay": "",
+      "userID": "87f1da1b-b7e3-4574-a49f-57158b0db6f4",
+      "userDisplay": "Sarina Hao"
+    },
+    "date": "2024-09-06T00:43:54.124Z",
+    "alias": "beta"
+  }

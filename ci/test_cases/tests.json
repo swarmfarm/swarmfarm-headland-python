@@ -1,0 +1,562 @@
+{
+    "testParameters": {
+        "boundaryToleranceM": 0.1,
+        "innerCoverageToleranceM": 0.1,
+        "turnRadiusSamplingDistanceM": 1.65,
+        "turnRadiusToleranceDeg": 0.75
+    },
+    "testCases": [
+        {
+            "description": "Perfect Circle",
+            "inputPayload": "circle.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 1,
+                "borderCoverageTolerancePercent": 99.8
+            }
+        },
+        {
+            "description": "Tree Rows",
+            "inputPayload": "tree_rows_pass.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 4,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "Tree Rows Too Close To Operating Area Edge - should fail",
+            "inputPayload": "tree_rows_FAILMANY.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 1,
+                "exceptNumOtherErrorGeoms": 9,
+                "expectNumHeadlands": 0
+            }
+        },
+        {
+            "description": "Tree Rows Too Close To Operating Area Edge - should fail",
+            "inputPayload": "tree_rows_FAILONE.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 1,
+                "exceptNumOtherErrorGeoms": 1,
+                "expectNumHeadlands": 0
+            }
+        },
+        {
+            "description": "Tree Rows Right Againt Headland, Fails To Smooth",
+            "inputPayload": "tree_rows_borderline_PARTIALFAIL.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 1,
+                "expectNumUnsmoothablePoints": 3,
+                "expectNumHeadlands": 0,
+                "borderCoverageTolerancePercent": 99.8
+            }
+        },
+        {
+            "description": "Tree Rows In Next Subfield Over, Should Avoid Collision",
+            "inputPayload": "tree_rows_adjacent.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "Tree Rows Too Close In Next Subfield Over, Should Fail",
+            "inputPayload": "tree_rows_adjacent_FAIL.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 1,
+                "exceptNumOtherErrorGeoms": 1,
+                "expectNumHeadlands": 0
+            }
+        },
+        {
+            "description": "Tree Rows Surrounded By Obstacles, Should Succeed With Unreachable Areas",
+            "inputPayload": "tree_rows_surrounded_obstacles_PARTIALFAIL.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 1,
+                "expectNumHeadlands": 1,
+                "exceptNumOtherErrorGeoms": 3,
+                "borderCoverageTolerancePercent": 96.3
+            }
+        },
+        {
+            "description": "Tree Rows Surrounded By Obstacles With Insufficient Room, Should Fail With Specific Error Geoms",
+            "inputPayload": "tree_rows_surrounded_obstacles_FAIL.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 1,
+                "exceptNumOtherErrorGeoms": 4,
+                "expectNumHeadlands": 0
+            }
+        },
+        {
+            "description": "Obstacle Categories 0",
+            "inputPayload": "obstacle_categories_0.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 97.7
+            }
+        },
+        {
+            "description": "Obstacle Categories 1",
+            "inputPayload": "obstacle_categories_1.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 97.7
+            }
+        },
+        {
+            "description": "Obstacle Categories 2 - tight area with large turn radius causes odd 3rd headland",
+            "inputPayload": "obstacle_categories_2.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.75
+            }
+        },
+        {
+            "description": "Test Field K 12m",
+            "inputPayload": "test_field_k_12m_default.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.8
+            }
+        },
+        {
+            "description": "Previous Algorithm Fail With Headland Exceding Operating Area",
+            "inputPayload": "simple_square_prev_fail.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 92.9
+            }
+        },
+        {
+            "description": "With Obstacle",
+            "inputPayload": "simple_square_with_obstacle.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.2
+            }
+        },
+        {
+            "description": "Artificial Obstacles",
+            "inputPayload": "artificial_obstacles.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 96.4
+            }
+        },
+        {
+            "description": "Warra Partnership Moora 5",
+            "inputPayload": "warrapartnership_moora5.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "UAH Readons Peacocks",
+            "inputPayload": "uah_eardonspeacocks.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "Taraba Kiwi",
+            "inputPayload": "taraba_kiwi.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "Green Pty Ltd 125",
+            "inputPayload": "green_pty_ltd_125.json",
+            "settings": {
+                "utmZone": 50,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.8
+            }
+        },
+        {
+            "description": "Jeude Kaen 1",
+            "inputPayload": "jeude_kaen1.json",
+            "settings": {
+                "utmZone": 56,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "Al A Flannagan Walkers East EW",
+            "inputPayload": "alaflanagan_walkerseastew.json",
+            "settings": {
+                "utmZone": 50,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.7
+            }
+        },
+        {
+            "description": "Al A Flannagan Coralie South East",
+            "inputPayload": "alaflanagan_coraliesoutheast.json",
+            "settings": {
+                "utmZone": 50,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 93.8
+            }
+        },
+        {
+            "description": "AgLife Allambie South",
+            "inputPayload": "aglife_allambie_south.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "AgLife Triangle",
+            "inputPayload": "aglife_triangle.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumUncoverablePoints": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "Ardno Shed 1",
+            "inputPayload": "ardno_shed1.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "Doolin Agriculture Wolonga",
+            "inputPayload": "doolin_wolonga.json",
+            "settings": {
+                "utmZone": 56,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "Viridis Canowindra P6",
+            "inputPayload": "viridis_canowindra_p6.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "Yarramalong Turf 3",
+            "inputPayload": "yarramalong_turf_3.json",
+            "settings": {
+                "utmZone": 56,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "Yarramalong Turf Al's Front Paddock",
+            "inputPayload": "yarramalong_turn_alsfrontpaddock.json",
+            "settings": {
+                "utmZone": 56,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.8
+            }
+        },
+        {
+            "description": "Glenora Farming East - sharp shape in operating area causes headland to cut corner",
+            "inputPayload": "glenora_east.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "Artificial Paddock 2m",
+            "inputPayload": "artificial_paddock_2m.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.7
+            }
+        },
+        {
+            "description": "MultiPolygon",
+            "inputPayload": "multipolygon.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 94.4
+            }
+        },
+        {
+            "description": "Multipolyon with long bottleneck of varying width",
+            "inputPayload": "multipolygon_bottleneck.json",
+            "settings": {
+                "utmZone": 56,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.0
+            }
+        },
+        {
+            "description": "Multipolyon with mulltiple bottlenecks of different widths - CAN NOW GENERATE 3 HEADLANDS",
+            "inputPayload": "multipolygon_multibottleneck_PREVFAIL.json",
+            "settings": {
+                "utmZone": 56,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 98.6
+            }
+        },
+        {
+            "description": "Coorong Pastoral ALL PADDOCKS",
+            "inputPayload": "coorong_pastoral_allpaddocks.json",
+            "settings": {
+                "utmZone": 51,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.9
+            }
+        },
+        {
+            "description": "Sundown Pastoral Co Woodcourt Robot - lots of bottlenecks",
+            "inputPayload": "sundown_woodcourtnorth.json",
+            "settings": {
+                "utmZone": 56,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.7
+            }
+        },       
+        {
+            "description": "Tanally Pty Ltd 16 - 1 UNCOVERABLE AREA BUT CAN BE HANDLED IN FUTURE",
+            "inputPayload": "tanally_16.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 1,
+                "expectUncoverableGaps": 1,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.6
+            }
+        },
+        {
+            "description": "Wimboyne Bottom Merrilong - CAN NOW GENERATE 3 HEADLANDS",
+            "inputPayload": "wimboyne_bottommerrilong_PREVFAIL.json",
+            "settings": {
+                "utmZone": 56,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 99.5
+            }
+        },
+        {
+            "description": "Artificial Paddock - CANNOT GENERATE 3 HEADLANDS",
+            "inputPayload": "insufficient_room_PARTIALFAIL.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 1,
+                "expectNumHeadlands": 2,
+                "borderCoverageTolerancePercent": 95.3
+            }
+        },
+        {
+            "description": "MultiPolygon - CAN NOW GENERATE 3 HEADLANDS",
+            "inputPayload": "multipolygon_PREVFAIL.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 97.5
+            }
+        },
+        {
+            "description": "impassable_obstacle_FAIL - can only generate headlands for part of the paddock, also cannot fill cover or generate 3rd",
+            "inputPayload": "impassable_obstacle_FAIL.json",
+            "settings": {
+                "utmZone": 55,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 3,
+                "expectNumHeadlands": 2,
+                "expectUncoverableGaps": 1,
+                "exceptNumOtherErrorGeoms": 1,
+                "borderCoverageTolerancePercent": 54.2
+            }
+        }
+    ]
+}

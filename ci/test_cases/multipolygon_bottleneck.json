@@ -1,0 +1,80 @@
+{
+    "settings": {
+        "numHeadlands": 3,
+        "rowSpacing": 24,
+        "biggestHeadlandPathBuffering": 12,
+        "minPathTurnRadius": 5.868579765141088,
+        "projection": {
+            "type": "TOPCON",
+            "zone": 55,
+            "hemisphere": "SOUTH"
+        }
+    },
+    "operatingArea": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    149.57314823195364,
+                    -34.960107391669645
+                ],
+                [
+                    149.57164762443279,
+                    -34.9604892551764
+                ],
+                [
+                    149.56847405477896,
+                    -34.96061657189244
+                ],
+                [
+                    149.5684887472307,
+                    -34.95918670725496
+                ],
+                [
+                    149.57054522062765,
+                    -34.959218263351666
+                ],
+                [
+                    149.57114914112302,
+                    -34.96008242049234
+                ],
+                [
+                    149.57134764328956,
+                    -34.959848002878864
+                ],
+                [
+                    149.57166425469086,
+                    -34.95991611325481
+                ],
+                [
+                    149.57178515588572,
+                    -34.959313512204155
+                ],
+                [
+                    149.57258902125906,
+                    -34.95897898437897
+                ],
+                [
+                    149.57314823195364,
+                    -34.960107391669645
+                ]
+            ]
+        ]
+    },
+    "obstacles": [],
+    "metadata": {
+        "channelID": "8c470386-c921-4489-9588-94c4d9344abc",
+        "channelDisplay": "SwarmFarm - Automated Testing Data - Free Routing",
+        "datasetID": "5f103950-f8d9-48ea-8617-7feb64a1a8b3",
+        "fieldID": "cd77377d-b082-4a64-9905-a51b8d258fb9",
+        "subfieldID": "63946de8-0cf8-4827-9cd4-16e296171b8c",
+        "fieldDisplay": "",
+        "subfieldDisplay": "",
+        "userID": "87f1da1b-b7e3-4574-a49f-57158b0db6f4",
+        "userDisplay": "Sarina Hao"
+    },
+    "date": "2025-02-20T22:08:19.056Z",
+    "alias": "prod",
+    "treeRows": [],
+    "adjacentTreeRows": []
+}

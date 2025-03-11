@@ -1,0 +1,69 @@
+{
+  "settings": {
+    "numHeadlands": 3,
+    "biggestHeadlandPathBuffering": 6,
+    "minPathTurnRadius": 6.664479632144669,
+    "projection": {
+      "type": "TOPCON",
+      "zone": 55,
+      "hemisphere": "SOUTH"
+    }
+  },
+  "operatingArea": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          149.561472705883,
+          -34.95729152438557
+        ],
+        [
+          149.56015922347643,
+          -34.95744793921266
+        ],
+        [
+          149.55794763344196,
+          -34.95740193488266
+        ],
+        [
+          149.55800376516754,
+          -34.95498207073143
+        ],
+        [
+          149.55852017705433,
+          -34.954623225476915
+        ],
+        [
+          149.55941828468374,
+          -34.954954467306045
+        ],
+        [
+          149.56119204724982,
+          -34.95441159805213
+        ],
+        [
+          149.56165232740943,
+          -34.955653751214015
+        ],
+        [
+          149.561472705883,
+          -34.95729152438557
+        ]
+      ]
+    ]
+  },
+  "obstacles": [],
+  "metadata": {
+    "channelID": "8c470386-c921-4489-9588-94c4d9344abc",
+    "channelDisplay": "SwarmFarm - Automated Testing Data - Free Routing",
+    "datasetID": "5f103950-f8d9-48ea-8617-7feb64a1a8b3",
+    "fieldID": "facbf91e-1262-416e-a2e6-dd6d0a0bea50",
+    "subfieldID": "fa919988-f65c-4aba-8514-479de18b8ac4",
+    "fieldDisplay": "",
+    "subfieldDisplay": "",
+    "userID": "87f1da1b-b7e3-4574-a49f-57158b0db6f4",
+    "userDisplay": "Sarina Hao"
+  },
+  "date": "2024-10-01T04:51:02.250Z",
+  "alias": "prod"
+}
