@@ -123,8 +123,11 @@ min_smoothing_splice_dist_m = 1
 # highest splice distance to try when smoothing
 max_smoothing_splice_dist_m = 150
 
-# step at which to move up when trying distance pairs
-smoothing_splice_dist_step_m = 2
+# starting step at which to move up when trying distance pairs, whenever we aren't using max precision (max precision will always use step = 1m, such as when the turn radius is bigger than the headland path buffering)
+smoothing_min_splice_dist_step_m = 2
+
+# this amount to increase the dist step by in each subsequent search section -> as we broaden our search, we can reduce the precision to avoid taking an incredibly long time
+smoothing_splice_dist_step_increase_m = 2
 
 # number of intervals between the distance pairs to try, i.e. if num_intervals = 10 then first an interval of 0 will be tried, then an interval of 1/10 * max distance, then 2/10 * max distance, etc.
 smoothing_splice_dist_num_intervals = 10
@@ -1392,7 +1395,9 @@ class HeadlandCreator:
                     )
 
                 if self.print_output:
-                    print(f"buffered {buffer_dist - dist_remaining} out of {buffer_dist}")
+                    print(
+                        f"buffered {buffer_dist - dist_remaining} out of {buffer_dist}"
+                    )
 
                 # break buffering loop if step has to be reduced
                 if reduce_step:
@@ -1689,11 +1694,11 @@ class HeadlandCreator:
 
             # if simple smoothing was not succifient, continue with elaborate smoothing algorithm
 
-        # when the min turn radius is equal to or larger than the coverage distance, it is more likely to generate paths that cut corners, therefore always use a step of 1 to maximum precision of options to try
+        # when the min turn radius is equal to or larger than the coverage distance, it is more likely to generate paths that cut corners, therefore always use maximum precision instead of whatever precision is normally configured
         if self.min_turn_radius_m >= self.headland_path_buffering_m:
-            dist_step = 1
+            max_precision = True
         else:
-            dist_step = smoothing_splice_dist_step_m
+            max_precision = False
 
         iterations = 0
         tested = list()
@@ -1759,6 +1764,19 @@ class HeadlandCreator:
                 next_dist_start = min_smoothing_splice_dist_m
                 smoothed = False
                 for section in range(smoothing_splice_dist_interval_sections):
+                    if max_precision:
+                        # for max precision we only ever step 1m at a time
+                        dist_step = 1
+                    else:
+                        # otherwise, as we search wider sections of distances, decrease the precision as the search goes on -> mostly a speed saving measure so trying wider options does not take an incredibly long time
+                        # a high majority of searches succeed in the first section anyway, we should keep searching for the few cases that do succeed later but it's also quite likely to never succeed
+                        # if there is a later solution to be found, a drop in precision probably won't decrease our chances much at wider distances, and if there isn't it's good to timeout faster to avoid blowing out runtime
+                        # as we start with section = 0, we start with = smoothing_min_splice_dist_step_m
+                        dist_step = (
+                            smoothing_min_splice_dist_step_m
+                            + smoothing_splice_dist_step_increase_m * section
+                        )
+
                     for higher_dist in range(
                         next_dist_start, max_smoothing_splice_dist_m, dist_step
                     ):
@@ -2526,7 +2544,7 @@ class HeadlandCreator:
                         print(
                             "!! still trying to loop after hitting max_make_traversable_iterations"
                         )
-                    self.has_unsmoothable_points = True
+                        self.has_unsmoothable_points = True
 
                 self.update_progress()
 

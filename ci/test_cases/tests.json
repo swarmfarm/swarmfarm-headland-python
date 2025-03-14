@@ -478,7 +478,7 @@
             }
         },
         {
-            "description": "Sundown Pastoral Co Woodcourt Robot - lots of bottlenecks",
+            "description": "Sundown Pastoral Co Woodcourt Robot - lots of bottlenecks + point that takes multiple iterations to smooth",
             "inputPayload": "sundown_woodcourtnorth.json",
             "settings": {
                 "utmZone": 56,
@@ -489,7 +489,34 @@
                 "expectNumHeadlands": 3,
                 "borderCoverageTolerancePercent": 99.7
             }
-        },       
+        },
+        {
+            "description": "Carawebb Family Trust Kakara 8 - bottlenecks + points that take multiple iterations to smooth",
+            "inputPayload": "carawebb_kakara8.json",
+            "settings": {
+                "utmZone": 53,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 0,
+                "expectNumHeadlands": 3,
+                "borderCoverageTolerancePercent": 97.5
+            }
+        },
+        {
+            "description": "Gavin Farming Floodway - very narrow, connect get full coverage 2nd headland but can be handled in future",
+            "inputPayload": "gavin_floodway.json",
+            "settings": {
+                "utmZone": 56,
+                "hemisphere": "SOUTH"
+            },
+            "test": {
+                "expectNumErrors": 1,
+                "expectUncoverableGaps": 1,
+                "expectNumHeadlands": 2,
+                "borderCoverageTolerancePercent": 92.9
+            }
+        },
         {
             "description": "Tanally Pty Ltd 16 - 1 UNCOVERABLE AREA BUT CAN BE HANDLED IN FUTURE",
             "inputPayload": "tanally_16.json",

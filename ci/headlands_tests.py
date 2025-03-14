@@ -198,7 +198,7 @@ class TestClass:
             self.fig.canvas.mpl_connect("pick_event", self.onPick)
             leg.set_draggable(True)
 
-            if not (self.args.only_failed and success):
+            if not (self.args.show_failed and success):
                 plt.show()
 
     def doTest(self, test_idx, passed_tests, all_tests):
@@ -347,6 +347,8 @@ class TestClass:
 
         # generate headlands
         headland_start = time()
+
+        # print("python3 app/headlands.py " + self.input_path + " True True")
 
         # pass in skip_final_simplification = True -> for testing only, we have the option to not simplify so that we can test the original unsimplified result
         # this is a bit strange since that means we're not testing the actual output, but this is because simplification introduces variance that the turn radius calculation method cannot handle
@@ -853,11 +855,15 @@ class TestClass:
             help="Display test case data in plot.",
         )
         parser.add_argument(
-            "--only-failed",
+            "--show-failed",
             action="store_true",
             help="Display plots for failed cases only.",
         )
         self.args = parser.parse_args()
+
+        # toggle show_plots also if we are showing only failed plots
+        if self.args.show_failed:
+            self.args.show_plots = True
 
         self.test_folder = "ci/test_cases"
 
