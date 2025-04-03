@@ -21,9 +21,8 @@ NEW = "new"
 OPERATING_AREA = "Operating Area"
 OBSTACLES = "Obstacles"
 TREE_ROWS = "Tree Rows"
-RAW_HEADLANDS = "Raw Headlands"
-RAW_HEADLANDS_COVERAGE = "Raw Headlands Coverage"
 HEADLANDS = "Headlands"
+REFERENCE_HEADLANDS = "Reference Headlands"
 HEADLANDS_COVERAGE = "Headlands Coverage"
 
 
@@ -161,9 +160,8 @@ class TestClass:
                 OPERATING_AREA,
                 OBSTACLES,
                 TREE_ROWS,
-                RAW_HEADLANDS,
-                RAW_HEADLANDS_COVERAGE,
                 HEADLANDS,
+                REFERENCE_HEADLANDS,
                 HEADLANDS_COVERAGE,
             ]:
                 if label in labels:
@@ -208,6 +206,8 @@ class TestClass:
         if self.args.test_case is not None and filename != self.args.test_case:
             return
         all_tests.append(filename)
+
+        reference_path = f"{self.test_folder}/{filename}_reference.json"
 
         output = "--------------------\n"
 
@@ -345,6 +345,27 @@ class TestClass:
             if self.args.show_plots:
                 self.plots[TREE_ROWS] = tree_row_plots
 
+
+        # get reference headlands -> for plotting only
+        if self.args.show_plots:
+            if os.path.exists(reference_path):
+                reference_headlands = json.load(open(reference_path))
+
+                reference_headland_plots = list()
+                for reference_headland in reference_headlands["features"]:
+                    reference_headland_coords = self.getUTMCoords(
+                        reference_headland["geometry"]["coordinates"][0]
+                    )
+                    (reference_headland_plot,) = self.ax.plot(
+                        *getXYLists(reference_headland_coords),
+                        "--o",
+                        label=REFERENCE_HEADLANDS,
+                        color="blue",
+                        alpha=1.0,
+                    )
+                    reference_headland_plots.append(reference_headland_plot)
+                self.plots[REFERENCE_HEADLANDS] = reference_headland_plots        
+
         # generate headlands
         headland_start = time()
 
@@ -379,6 +400,10 @@ class TestClass:
             if self.args.show_plots:
                 headland_plots = list()
                 headland_coverage_plots = list()
+
+            if self.args.write_reference:
+                with open(reference_path, 'w') as file:
+                    file.write(json.dumps(headland_payload))
 
             for headland in headland_payload["features"]:
                 assertIsExteriorOnly(
@@ -421,12 +446,11 @@ class TestClass:
                     )
                     headland_coverage_plots.append(headland_coverage_plot)
 
-            num_headlands = len(headlands)
-
             if self.args.show_plots:
                 self.plots[HEADLANDS] = headland_plots
                 self.plots[HEADLANDS_COVERAGE] = headland_coverage_plots
 
+            num_headlands = len(headlands)
             total_coverage = unary_union(headland_coverages)
 
         if "expectNumUnsmoothablePoints" in test["test"]:
@@ -858,6 +882,11 @@ class TestClass:
             "--show-failed",
             action="store_true",
             help="Display plots for failed cases only.",
+        )
+        parser.add_argument(
+            "--write-reference",
+            action="store_true",
+            help="Save generated headlands for reference in future tests.",
         )
         self.args = parser.parse_args()
 
